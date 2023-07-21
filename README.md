@@ -3,6 +3,8 @@ Wikimedia의 최근 변동사항 검색 기능을 **Kafka**와 **Opensearch**를
 
 This is a project to develop Wikimedia's latest change search function using **Kafka** and **Opensearch**.
 
+- [wikimedia stream 제공 URL](https://stream.wikimedia.org/v2/stream/recentchange)
+
 ## env
 
 ## architecture
