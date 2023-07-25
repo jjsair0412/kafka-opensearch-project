@@ -120,4 +120,13 @@ public class ProducerTests {
         // limit 10 min
         TimeUnit.MINUTES.sleep(10);
     }
+
+    @Test
+    public void startProducer(){
+        ManageProducer manageProducer = new ManageProducerImpl(new CreatePropertiesImpl(),producerPreference);
+        int result = manageProducer.StartProducer();
+        Assertions.assertThat(result).isEqualTo(1);
+    }
+
+
 }
