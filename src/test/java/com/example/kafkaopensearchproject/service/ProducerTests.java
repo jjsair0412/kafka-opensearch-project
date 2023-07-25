@@ -4,8 +4,11 @@ import com.example.kafkaopensearchproject.domain.ProducerPreference;
 import com.example.kafkaopensearchproject.domain.idStreamData;
 import com.example.kafkaopensearchproject.service.createKafkaProperties.CreateProperties;
 import com.example.kafkaopensearchproject.service.createKafkaProperties.CreatePropertiesImpl;
+import com.example.kafkaopensearchproject.service.handlers.WikimediaChangeHandler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.launchdarkly.eventsource.EventHandler;
+import com.launchdarkly.eventsource.EventSource;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.assertj.core.api.Assertions;
@@ -17,7 +20,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 public class ProducerTests {
@@ -27,7 +32,7 @@ public class ProducerTests {
     private ProducerPreference producerPreference;
 
     @Test
-    public void producerTest(){
+    public void producerConnectTest(){
         CreateProperties properties = new CreatePropertiesImpl();
 
         KafkaProducer<String,String> producer = new KafkaProducer<>(properties.CreateProperties(producerPreference));
@@ -96,4 +101,23 @@ public class ProducerTests {
 
     }
 
+
+    @Test
+    public void eventHandlerTest() throws InterruptedException {
+        CreateProperties properties = new CreatePropertiesImpl();
+
+        KafkaProducer<String,String> producer = new KafkaProducer<>(properties.CreateProperties(producerPreference));
+        String topic = "wikimedia.recentchage.boot";
+
+        EventHandler eventHandler = new WikimediaChangeHandler(producer, topic);
+        String url = "https://stream.wikimedia.org/v2/stream/recentchange";
+
+        EventSource.Builder builder = new EventSource.Builder(eventHandler, URI.create(url));
+        EventSource eventSource = builder.build();
+
+        eventSource.start();
+
+        // limit 10 min
+        TimeUnit.MINUTES.sleep(10);
+    }
 }
