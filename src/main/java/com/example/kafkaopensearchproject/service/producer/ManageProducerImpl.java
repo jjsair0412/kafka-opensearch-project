@@ -1,8 +1,8 @@
-package com.example.kafkaopensearchproject.service;
+package com.example.kafkaopensearchproject.service.producer;
 
 import com.example.kafkaopensearchproject.domain.ProducerPreference;
 import com.example.kafkaopensearchproject.service.createKafkaProperties.CreateProperties;
-import com.example.kafkaopensearchproject.service.handlers.WikimediaChangeHandler;
+import com.example.kafkaopensearchproject.service.producer.handlers.WikimediaChangeHandler;
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
 import lombok.RequiredArgsConstructor;

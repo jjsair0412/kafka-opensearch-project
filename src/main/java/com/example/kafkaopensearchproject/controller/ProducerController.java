@@ -1,6 +1,6 @@
 package com.example.kafkaopensearchproject.controller;
 
-import com.example.kafkaopensearchproject.service.ManageProducer;
+import com.example.kafkaopensearchproject.service.producer.ManageProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

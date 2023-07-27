@@ -1,4 +1,4 @@
-package com.example.kafkaopensearchproject.service.handlers;
+package com.example.kafkaopensearchproject.service.producer.handlers;
 
 
 import com.launchdarkly.eventsource.EventHandler;
